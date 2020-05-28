@@ -1,15 +1,11 @@
 import entities.CustomersEntity;
-import entities.OrderDetailsEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import javax.persistence.Query;
 import java.sql.Timestamp;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Application {
     private static final SessionFactory ourSessionFactory;
@@ -40,7 +36,7 @@ public class Application {
 
             Invoice invoice = new Invoice();
             CustomersEntity customer = session.get(CustomersEntity.class, 4);
-            invoice.invoice("123456", startDate, endDate, customer, session);
+            invoice.create("123456", startDate, endDate, customer, session);
 
         }
         catch (Exception e){

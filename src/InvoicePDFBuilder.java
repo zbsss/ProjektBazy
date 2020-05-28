@@ -24,7 +24,6 @@ public class InvoicePDFBuilder {
 
     public static void makePDF(File fileName, Invoice data) {
         List<OrderData> ordersList = data.getOrderData();
-        int desc;
 
         Date curDate = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyy");
@@ -36,17 +35,15 @@ public class InvoicePDFBuilder {
             PdfWriter.getInstance(document, file);
 
             Image image = Image.getInstance("resources/logo.jpg");
-            image.scaleAbsolute(540f, 72f);//image width,height
-
-
+            image.scaleAbsolute(540f, 72f);
 
 
             PdfPTable irdTable = new PdfPTable(2);
             irdTable.setWidthPercentage(50);
-            irdTable.addCell(getIRDCell("Invoice No ")); // pass invoice number
+            irdTable.addCell(getIRDCell("Invoice No "));
             irdTable.addCell(getIRDCell(data.getInvoiceId()));
             irdTable.addCell(getIRDCell("Invoice Date"));
-            irdTable.addCell(getIRDCell(date)); // pass invoice date
+            irdTable.addCell(getIRDCell(date));
 
 
             PdfPTable irhTable = new PdfPTable(3);
@@ -68,8 +65,8 @@ public class InvoicePDFBuilder {
             FontSelector fs = new FontSelector();
             Font font = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.BOLD);
             fs.addFont(font);
-            Phrase bill = fs.process("Bill To"); // customer information
-            Paragraph name = new Paragraph( "Mr. " + data.getCustomer().getFirstName() + " " + data.getCustomer().getLastName() + ", " + data.getCustomer().getJobTitle());
+            Phrase bill = fs.process("Bill To:");
+            Paragraph name = new Paragraph( "Mr.\\ Mrs. " + data.getCustomer().getFirstName() + " " + data.getCustomer().getLastName() + ", " + data.getCustomer().getJobTitle());
             name.setIndentationLeft(20);
             Paragraph companyName = new Paragraph(data.getCustomer().getCompany());
             companyName.setIndentationLeft(20);
@@ -84,13 +81,13 @@ public class InvoicePDFBuilder {
             billTable.setSpacingBefore(30.0f);
             billTable.addCell(getBillHeaderCell("Index"));
             billTable.addCell(getBillHeaderCell("OrderID"));
-            billTable.addCell(getBillHeaderCell("OrderData Date"));
+            billTable.addCell(getBillHeaderCell("Order Date"));
             billTable.addCell(getBillHeaderCell("Product Name"));
             billTable.addCell(getBillHeaderCell("Unit Price"));
             billTable.addCell(getBillHeaderCell("Quantity"));
             billTable.addCell(getBillHeaderCell("Discount"));
-            billTable.addCell(getBillHeaderCell("Freight Price"));
-            billTable.addCell(getBillHeaderCell("Total Price"));
+            billTable.addCell(getBillHeaderCell("Shipping Price"));
+            billTable.addCell(getBillHeaderCell("Total Cost"));
 
             for (int i = 0; i < ordersList.size(); i++) {
                 billTable.addCell(getBillRowCell((i + 1) + ""));
@@ -116,9 +113,7 @@ public class InvoicePDFBuilder {
             PdfPTable validity = new PdfPTable(1);
             validity.setWidthPercentage(100);
             validity.addCell(getValidityCell(" "));
-            validity.addCell(getValidityCell("\t\tAdditional Info:"));
-            validity.addCell(getValidityCell("\tInvoice generated from Northwind Database "));
-            validity.addCell(getValidityCell("\tProject written with mysql, Hibernate & Java"));
+            validity.addCell(getValidityCell("\t\tAdditional Information:"));
             PdfPCell summaryL = new PdfPCell(validity);
             summaryL.setColspan(4);
             summaryL.setPadding(1.0f);
@@ -126,7 +121,7 @@ public class InvoicePDFBuilder {
 
             PdfPTable accounts = new PdfPTable(2);
             accounts.setWidthPercentage(100);
-            accounts.addCell(getAccountsCell("Freight Total Price:"));
+            accounts.addCell(getAccountsCell("Shipping Total Price:"));
             accounts.addCell(getAccountsCellR("$" + String.valueOf(Math.floor(data.getTotalShipping() * 100) / 100)));
             accounts.addCell(getAccountsCell("Orders Total Price:"));
             accounts.addCell(getAccountsCellR("$" + String.valueOf(Math.floor(data.getTotalPrice() * 100) / 100)));
@@ -134,9 +129,9 @@ public class InvoicePDFBuilder {
             accounts.addCell(getAccountsCellR("$" + String.valueOf(Math.floor((data.getTotalShipping() + data.getTotalPrice()) * 100) / 100)));
             accounts.addCell(getAccountsCell(""));
             accounts.addCell(getAccountsCellR(""));
-            accounts.addCell(getAccountsCell("Invoice Period from"));
+            accounts.addCell(getAccountsCell("Invoices since:"));
             accounts.addCell(getAccountsCellR(format.format(data.getStartDate())));
-            accounts.addCell(getAccountsCell("Invoice Period due to"));
+            accounts.addCell(getAccountsCell("Due to:"));
             accounts.addCell(getAccountsCellR(format.format(data.getEndDate())));
 
 
@@ -149,7 +144,7 @@ public class InvoicePDFBuilder {
             describer.addCell(getdescCell(" "));
             describer.addCell(getdescCell(" \n\n"));
 
-            document.open();//PDF document opened........
+            document.open();
 
             document.add(image);
             document.add(irhTable);

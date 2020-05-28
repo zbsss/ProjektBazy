@@ -87,15 +87,6 @@ public class OrderData {
         return orderDate;
     }
 
-    public int getCustomerID() {
-        return customerID;
-    }
-
-
-    public int getProductID() {
-        return productID;
-    }
-
     public String getProductName() {
         return productName;
     }

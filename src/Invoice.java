@@ -18,7 +18,7 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(
+    private Invoice(
             String invoiceId,
             CustomersEntity customer,
             List<OrderData> orderData,
@@ -36,40 +36,17 @@ public class Invoice {
         this.totalPrice = totalPrice;
     }
 
+    public void create(String invoiceNumber, Timestamp startDate, Timestamp endDate, CustomersEntity customer, Session session) {
 
-    public void invoice(String invoiceNumber, Timestamp startDate, Timestamp endDate, CustomersEntity customer, Session session) {
+        List<OrderData> orders = OrderData.getOrders(startDate, endDate, customer, session);
+        double totalShipping = orders.stream().map(OrderData::getShippingFee).reduce(0.0, Double::sum);
+        double orderPrice = orders.stream().map(OrderData::getTotalPrice).reduce(0.0, Double::sum);
+        Invoice invoiceData = new Invoice(invoiceNumber, customer, orders, startDate, endDate, totalShipping, orderPrice);
 
-        List<OrderData> invoiceOrdersList = OrderData.getOrders(startDate, endDate, customer, session);
-        double totalFreightPrice = invoiceOrdersList.stream().map(OrderData::getShippingFee).reduce(0.0, Double::sum);
-        double totalOrdersPrice = invoiceOrdersList.stream().map(OrderData::getTotalPrice).reduce(0.0, Double::sum);
-        Invoice invoiceData = new Invoice(invoiceNumber, customer, invoiceOrdersList, startDate, endDate, totalFreightPrice, totalOrdersPrice);
-
-        invoiceData.printSummary();
         String fileName = title(customer.getCompany());
-        File newInvoice = new File("invoices/" + fileName + "_invoice.pdf");
-        InvoicePDFBuilder.makePDF(newInvoice, invoiceData);
+        File file = new File("invoices/" + fileName + "_invoice.pdf");
+        InvoicePDFBuilder.makePDF(file, invoiceData);
     }
-
-    private void printSummary() {
-
-        this.orderData.forEach(o -> {
-            System.out.println(
-                    "\tOrderID: " + o.getOrderID() +
-                            "\tOrderDate: " + o.getOrderDate() +
-                            "\tCustomerID: " + o.getCustomerID() +
-                            "\tProductID: " + o.getProductID() +
-                            "\tProductName: " + o.getProductName() +
-                            "\tUnitPrice: " + o.getUnitPrice() +
-                            "\tQuantity: " + o.getQuantity() +
-                            "\tDiscount: " + o.getDiscount() +
-                            "\tFreight: " + o.getShippingFee() +
-                            "\tTotalOrderPrice: " + o.getTotalPrice() + "\n");
-        });
-        System.out.println("\t TotalOrdersPrice:\t" + this.totalPrice);
-        System.out.println("\t TotalFreightPrice:\t" + this.totalShipping);
-        System.out.println("\t \t SummaryPrice:\t" + (this.totalShipping + this.totalPrice));
-    }
-
 
     public String getInvoiceId() {
         return invoiceId;
