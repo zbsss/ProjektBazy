@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://localhost:3306/northwind?useLegacyDatetimeCode=false&amp;serverTimezone=UTC</property>
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.use_sql_comments">true</property>
+        <property name="connection.username">user</property>
+        <property name="connection.password">1234</property>
+
+
+        <mapping class="entities.CustomersEntity"/>
+        <mapping class="entities.EmployeesEntity"/>
+        <mapping class="entities.OrderDetailsEntity"/>
+        <mapping class="entities.OrdersEntity"/>
+        <mapping class="entities.ProductsEntity"/>
+        <mapping class="entities.ShippersEntity"/>
+        <mapping class="entities.SuppliersEntity"/>
+
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>
