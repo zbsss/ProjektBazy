@@ -1,5 +1,6 @@
 # Projekt Bazy Danych
 ## Generowanie faktur PDF dla bazy Northwind (mySQL)
+### *Michał Kurleto*
 
 W aplikacji podajemy z jakiego okresu czasu bierzemy zamówienia do faktury oraz dla jakiej firmy. Program automatycznie generuje odpowiednią fakturę i umieszcza ją w folderze **invoices**.
 
@@ -12,4 +13,6 @@ W aplikacji podajemy z jakiego okresu czasu bierzemy zamówienia do faktury oraz
 - Klasa **InvoicePDFBuilder** tworzy fakturę w formacie PDF.
 
 ### Przykładowa faktura znajduje się w folderze **invoces**
+
+## Schemat Bazy Danych
 
