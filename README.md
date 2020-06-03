@@ -15,4 +15,4 @@ W aplikacji podajemy z jakiego okresu czasu bierzemy zamówienia do faktury oraz
 ### Przykładowa faktura znajduje się w folderze **invoces**
 
 ## Schemat Bazy Danych
-
+![Schemat](resources/baza.jpg)
