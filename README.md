@@ -6,7 +6,7 @@ W aplikacji podajemy z jakiego okresu czasu bierzemy zamówienia do faktury oraz
 
 - Wszystkie zamodelowane encje z bazy Northwind znajdują się w folderze **/src/entities**
 
-- Klasa **OrderData** odpowiada za pobieranie i przechowywanie danych z zamówień potrzebnych do faktury.
+- Klasa **OrderData** odpowiada za pobieranie i przechowywanie danych z zamówień potrzebnych do faktury. Dane są pobierane za pomocą zapytania do bazy danych.
 
 - Klasa **Invoice** odpowiada agregację zamówień i przygotowanie faktury
 
@@ -15,4 +15,4 @@ W aplikacji podajemy z jakiego okresu czasu bierzemy zamówienia do faktury oraz
 ### Przykładowa faktura znajduje się w folderze **invoces**
 
 ## Schemat Bazy Danych
-![Schemat](resources/baza.jpg)
+![Schemat Bazy](resources/baza.jpg)
